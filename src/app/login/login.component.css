@@ -1,0 +1,26 @@
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.btn-margin {
+    margin-left: 27%;
+    margin-right: 1%;
+}
+
+.form-bg{
+    background-color: #eee;
+    color: #666;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    border: 1px solid #fff;
+    margin: auto;
+    margin-top: 7%;
+    margin-bottom: 6%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    height: 40%;
+}

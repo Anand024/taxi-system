@@ -1,0 +1,314 @@
+<div class="container-fluid">
+  <div id="accordion" class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="firstRow">
+        <div class="row card-header collapsed" data-toggle="collapse" href="#collapseOne">
+          <h2 style="float:left;" class="section-title text-center">
+            Personal Details
+          </h2>
+        </div>
+        <form #personalDetails="ngForm" class="row detail border border-dark">
+          <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="collapseOne" data-parent="#accordion">
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">First Name</label>
+                  <input type="text" id="driverName" class="form-control" placeholder="" [(ngModel)]="driverData.firstName" name="first" maxlength="60"
+                    required>
+                </div>
+              </div>
+              <!-- Add here -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Last Name</label>
+                  <input type="text" id="driverLastName" class="form-control" placeholder="" [(ngModel)]="driverData.lastName" name="last" maxlength="60" 
+                    required>
+                </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label for="gender">Gender</label>
+                <div class="">
+                  <select class="form-control" id="gender" [(ngModel)]="driverData.sex" name="sex">
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Email</label>
+                  <input type="email" id="emailId" class="form-control" placeholder="" [(ngModel)]="driverData.email" name="emailId" required>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Other Phone</label>
+                  <input type="text" id="otherPhone" class="form-control" placeholder="" [(ngModel)]="driverData.otherPhone" #otherPhone="ngModel" name="otherPhoneNum">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Alias Name</label>
+                  <input type="text" id="aliasName" class="form-control" placeholder="" [(ngModel)]="driverData.aliasName" #aliasName="ngModel" name="aliasNam">
+                </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label for="country">Country</label>
+                <div class="">
+                  <select class="form-control" id="country" [(ngModel)]="driverData.country" name="country" #country="ngModel">
+                    <option>Select</option>
+                    <option>India</option>
+                    <option>Srilanka</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label for="state">State</label>
+                <div class="">
+                  <select class="form-control" id="state" [(ngModel)]="driverData.state" name="state" >
+                    <option>Select</option>
+                    <option>Karnataka</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label for="city">City</label>
+                <div class="">
+                  <select class="form-control" id="city" [(ngModel)]="driverData.city" #city="ngModel" name="city">
+                    <option>Select</option>
+                    <option>Bengaluru</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Pin Code</label>
+                  <input type="text" id="pinCode" class="form-control" placeholder="" [(ngModel)]="driverData.zip" #pinCode="ngModel" name="pin" required>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Plot No/Land Mark</label>
+                  <input type="text" id="plotNumber" class="form-control" placeholder="" [(ngModel)]="driverData.street" #landMark="ngModel" name="streetAdd" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="accordion1" class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="">
+        <div class="row card-header collapsed" data-toggle="collapse" href="#collapseTwo">
+          <h2 style="float:left;" class="section-title text-center">
+            Licencing
+          </h2>
+        </div>
+        <form class="row detail border border-dark" #licencing="ngForm">
+          <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="collapseTwo" data-parent="#accordion1">
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Hire Date</label>
+                  <my-date-picker name="hireDate" [options]="hireDateOptions" [(ngModel)]="driverData.startDate" required></my-date-picker>
+                </div>
+              </div>
+              <!-- Add here -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Driver Licence Number</label>
+                  <input type="text" id="driverLicenceNumber" class="form-control" placeholder="" [(ngModel)]="driverData.driverLicenceNumber" name="licenceNumber" maxlength="60" required>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Expiry Date</label>
+                  <my-date-picker name="expiryDate" [options]="expiryDateOptions" [(ngModel)]="driverData.driverLicenceExpiry" required></my-date-picker>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Driver Insurence</label>
+                  <input type="text" id="driverInsurence" class="form-control" placeholder="" name="driverInsurence" required>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Driver Insurence Expiry Date</label>
+                  <my-date-picker name="insurenceExpiryDate" [options]="InsurenceExpiryDateOptions" required></my-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="accordion2" class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="">
+        <div class="row card-header collapsed" data-toggle="collapse" href="#collapseThree">
+          <h2 style="float:left;" class="section-title text-center">
+            Document & Driver Photo
+          </h2>
+        </div>
+        <form class="row detail border border-dark">
+          <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="collapseThree" data-parent="#accordion2">
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="driverPhoto">Driver photo</label>
+                  <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <!-- Add here -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="proofAddress">Proof of address</label>
+                  <input type="file" id="proofAddress" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="policeDisclosure">Police disclosure</label>
+                  <input type="file" id="policeDisclosure" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="agreement">Agreement</label>
+                  <input type="file" id="agreement" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="licencePhoto">Licence photo</label>
+                  <input type="file" id="licencePhoto" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="licencePaper">Licence paper</label>
+                  <input type="file" id="licencePaper" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="pcoLicence">PCO licence</label>
+                  <input type="file" id="pcoLicence" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="insurence">Insurence</label>
+                  <input type="file" id="insurence" (change)="handleFileInput($event.target.files)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="accordion3" class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="">
+        <div class="row card-header collapsed" data-toggle="collapse" href="#collapseFour">
+          <h2 style="float:left;" class="section-title text-center">
+            Attributes
+          </h2>
+        </div>
+        <form class="row detail border border-dark">
+          <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="collapseFour" data-parent="#accordion3">
+            <div class="row">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <label for="crb">CRB</label>
+                  <div class="">
+                    <select class="form-control" id="crb">
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+              <!-- Add here -->
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <label for="delivery">Delivery</label>
+                  <div class="">
+                    <select class="form-control" id="delivery">
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                    <label for="female">Female</label>
+                    <div class="">
+                      <select class="form-control" id="female">
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                      <label for="luggage">Luggage</label>
+                      <div class="">
+                        <select class="form-control" id="luggage">
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label for="nhs">NHS</label>
+                        <div class="">
+                          <select class="form-control" id="nhs">
+                            <option>Yes</option>
+                            <option>No</option>
+                          </select>
+                        </div>
+                      </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="file">Pets</label>
+                  <input type="text" id="pets" class="form-control" placeholder="" name="pets" >
+                </div>
+              </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <label for="unformed">Unformed</label>
+                  <div class="">
+                    <select class="form-control" id="unformed">
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                    <label for="topman">Topman</label>
+                    <div class="">
+                      <select class="form-control" id="topman">
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-1">
+      <div class="col-md-12 col-sm-12 col-xs-12 m-t-10">
+          <button type="button" class="btn btn-default" routerLink="/driver"> Cancel</button>
+          <button type="button" style="float: right;" *ngIf="!driverId" class="btn btn-primary btn-xs pull-right m-r-10">
+              <span class="letter-space-small"></span> Save
+          </button>
+          <button type="button" style="float: right;" *ngIf="driverId" class="btn btn-primary btn-xs pull-right m-r-10">
+              <span class="letter-space-small"></span> Update
+          </button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .9rem;
+        padding-left: .9rem;
+}
+}
+
+.navbar {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.d-n-dropdown--light:before {
+    right: 5px !important;
+}

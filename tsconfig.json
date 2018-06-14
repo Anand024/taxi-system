@@ -5,11 +5,12 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
     "typeRoots": [
-      "node_modules/@types"
+      "lib"
     ],
     "lib": [
       "es2017",

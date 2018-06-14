@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div>
+    <!-- /input-group -->
+  </div>
+  <div class="col-sm-6 text-right">
+    <button type="button" class="btn btn-default" routerLink="/driver/addDriver">Add Driver</button>
+  </div>
+</div>
+<div class="mt-5">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+      <thead style="font: bold;">
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Mobile Number</th>
+          <th>Sex</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of driverData;let index=index;">
+          <td>{{index+1}}</td>
+          <td>
+            <span class="text-wrap">{{driver.firstName}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">{{driver.lastName}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">{{driver.email}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">{{driver.mobileNumber}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">{{driver.sex}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">{{driver.status}}</span>
+          </td>
+          <td>
+            <span class="text-wrap">
+                <a class="pointer" (click)="editDriver($event,driver)"><span class="oi oi-pencil"></span> </a>/ <span class="oi oi-trash" title="delete" aria-hidden="true"></span>
+            </span>
+          </td>
+        </tr>
+    </table>
+</div>
+<router-outlet></router-outlet>

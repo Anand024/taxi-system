@@ -1,0 +1,9 @@
+<ng-template [ngIf]="authService.getMockResponse()">
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div *ngFor="let link of headerLinks" class="col-md-2">
+        <h6 class="text-uppercase font-weight-bold text-center">{{link.name}} <span style="">|</span></h6>
+      </div>
+    </div>
+  </div>
+</ng-template>
