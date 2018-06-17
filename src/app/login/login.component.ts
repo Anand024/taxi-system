@@ -15,13 +15,23 @@ export class LoginComponent {
     emailId: string;
     emailPassword: string;
     loginStatus: any;
+    loginData = {
+        email: '',
+        opt: '',
+        password: ''
+    };
 
     constructor (private router: Router, private authService: AuthService) {}
     onSubmit() {
-        this.authService.checkLoginSuccess(this.emailId, this.emailPassword).subscribe(
+        this.authService.checkLoginSuccess(this.loginData).subscribe(
             res => {
-                this.loginStatus =  res;
-                this.router.navigate(['/activityDashboard']);
+                if (res) {
+                    this.loginStatus =  res;
+                    sessionStorage.setItem('userData', JSON.stringify(this.loginStatus));
+                    this.router.navigate(['/activityDashboard']);
+                } else {
+                    // this.router.navigate(['/']);
+                }
             }
         );
     }

@@ -1,4 +1,4 @@
-<ng-template [ngIf]="authService.getMockResponse()">
+<ng-template [ngIf]="authService.getMockResponse() || userLoginSuccess">
   <div class="container-fluid">
     <div class="row mt-3">
       <div *ngFor="let link of headerLinks" class="col-md-2">

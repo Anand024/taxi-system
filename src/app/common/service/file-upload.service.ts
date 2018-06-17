@@ -10,6 +10,7 @@ export class FileUploadService {
   postFile(fileToUpload: File): Observable<boolean> {
     const endpoint = 'your-destination-url';
     const formData: FormData = new FormData();
+    // pdf, png,
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     return null;
     // return this.httpClient

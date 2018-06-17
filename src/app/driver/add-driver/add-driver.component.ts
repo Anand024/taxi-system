@@ -3,7 +3,9 @@ import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker';
 import { FileUploadService } from '../../common/service/file-upload.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { DriverDataModel } from '../model/driverData.model'
+import { AddDriverDataModel } from '../model/driverData.model';
+import { BaseApiService } from '../../common/baseApi.service';
+import { DriverService } from '../../common/driver.service';
 
 @Component({
   selector: 'app-add-driver',
@@ -16,8 +18,13 @@ export class AddDriverComponent implements OnInit {
   @ViewChild('licencing') licencing: NgForm;
 
   driverId: string;
-  driverData: DriverDataModel[] = [];
-  constructor(private fileUploadService: FileUploadService, private route: ActivatedRoute) { }
+  driverData: AddDriverDataModel[] = [];
+  statesList: any[] = [];
+  countryList: any[] = [];
+  cityList: any[] = [];
+
+  constructor(private fileUploadService: FileUploadService, private route: ActivatedRoute,
+    private baseApiService: BaseApiService, private driverService: DriverService) { }
 
   public hireDateOptions: IMyDpOptions = {
     // other options...
@@ -62,6 +69,23 @@ export class AddDriverComponent implements OnInit {
       // call service
   }
   ngOnInit() {
+    const userId = this.baseApiService.getUserId();
+    const apiToken = this.baseApiService.getApiToken();
+    this.driverService.loadState(userId, apiToken).subscribe(response => {
+      if (response) {
+        this.statesList = response;
+      }
+    });
+    this.driverService.loadCountry(userId, apiToken).subscribe(response => {
+      if (response) {
+        this.countryList = response;
+      }
+    });
+    this.driverService.loadCity(userId, apiToken).subscribe(response => {
+      if (response) {
+        this.cityList = response;
+      }
+    });
     if (this.route.routeConfig.path === 'driver/editDriver/:driverId') {
       this.route && this.route.params.subscribe((params) => {
         this.driverId = params['driverId'];

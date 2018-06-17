@@ -20,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { DriverService } from './common/driver.service';
 import { FileUploadService } from './common/service/file-upload.service';
+import { ChangePasswordComponent } from './nav/change-password/change-password.component';
+import { BaseApiService } from './common/baseApi.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { FileUploadService } from './common/service/file-upload.service';
     FooterComponent,
     ActivityDashboardComponent,
     HeaderLinkComponent,
-    AddDriverComponent
+    AddDriverComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ import { FileUploadService } from './common/service/file-upload.service';
     HttpClientModule,
     DataTablesModule
   ],
-  providers: [AuthService, DriverService, FileUploadService],
+  providers: [AuthService, DriverService, FileUploadService, BaseApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

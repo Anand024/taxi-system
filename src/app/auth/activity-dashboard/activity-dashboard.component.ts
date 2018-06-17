@@ -10,6 +10,7 @@ export class ActivityDashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('authSuccess'));
   }
 
 }

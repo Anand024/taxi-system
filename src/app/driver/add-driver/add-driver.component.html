@@ -1,4 +1,29 @@
 <div class="container-fluid">
+  <div class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
+      <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="row">
+          <h2>
+            Login Details
+          </h2>
+        </div>
+        <form class="row detail border border-dark">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group is-required-short">
+                  <label class="control-label">Mobile Number</label>
+                  <input type="text" id="mobileNumber" class="form-control" placeholder="" [(ngModel)]="driverData.mobileNo" name="mobileNum" maxlength="60"
+                    required>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="form-group is-required-short">
+                    <label class="control-label">Password</label>
+                    <input type="text" id="password" class="form-control" placeholder="" [(ngModel)]="driverData.password" name="passwrd" maxlength="60"
+                      required>
+                  </div>
+                </div>
+        </form>
+      </div>
+  </div>
   <div id="accordion" class="accordion pb-15 col-xs-12 col-md-12 col-lg-12 col-sm-12 border border-dark pd-15">
     <div class="col-md-12 col-lg-12 col-sm-12">
       <div class="firstRow">
@@ -29,8 +54,8 @@
                 <label for="gender">Gender</label>
                 <div class="">
                   <select class="form-control" id="gender" [(ngModel)]="driverData.sex" name="sex">
-                    <option>Male</option>
-                    <option>Female</option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
                   </select>
                 </div>
               </div>
@@ -56,9 +81,7 @@
                 <label for="country">Country</label>
                 <div class="">
                   <select class="form-control" id="country" [(ngModel)]="driverData.country" name="country" #country="ngModel">
-                    <option>Select</option>
-                    <option>India</option>
-                    <option>Srilanka</option>
+                    <option *ngFor="let country of countryList" [ngValue]="country.countriId">{{country.name}}</option>
                   </select>
                 </div>
               </div>
@@ -66,8 +89,7 @@
                 <label for="state">State</label>
                 <div class="">
                   <select class="form-control" id="state" [(ngModel)]="driverData.state" name="state" >
-                    <option>Select</option>
-                    <option>Karnataka</option>
+                    <option *ngFor="let state of statesList" [ngValue]="state.stateId">{{state.stateName}}</option>
                   </select>
                 </div>
               </div>
@@ -75,8 +97,7 @@
                 <label for="city">City</label>
                 <div class="">
                   <select class="form-control" id="city" [(ngModel)]="driverData.city" #city="ngModel" name="city">
-                    <option>Select</option>
-                    <option>Bengaluru</option>
+                    <option *ngFor="let city of cityList" [ngValue]="city.cityId">{{city.citieName}}</option>
                   </select>
                 </div>
               </div>
@@ -92,6 +113,17 @@
                   <input type="text" id="plotNumber" class="form-control" placeholder="" [(ngModel)]="driverData.street" #landMark="ngModel" name="streetAdd" required>
                 </div>
               </div>
+              <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <label for="vehicle">Vehicle</label>
+                  <div class="">
+                    <select class="form-control" id="cabId" [(ngModel)]="driverData.cabId" #cabId="ngModel" name="cabId">
+                      <option>Select</option>
+                      <option value="123">Cab1</option>
+                      <option value="234">Cab2</option>
+                      <option value="456">Cab3</option>
+                    </select>
+                  </div>
+                </div>
             </div>
           </div>
         </form>
@@ -128,12 +160,12 @@
                   <my-date-picker name="expiryDate" [options]="expiryDateOptions" [(ngModel)]="driverData.driverLicenceExpiry" required></my-date-picker>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6 col-xs-12">
+              <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Driver Insurence</label>
-                  <input type="text" id="driverInsurence" class="form-control" placeholder="" name="driverInsurence" required>
+                  <label class="control-label">Driver Insurance</label>
+                  <input type="text" id="driverInsurence" class="form-control" placeholder="" name="driverInsurence" [(ngModel)]="driverData.insurance" required>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
                   <label class="control-label">Driver Insurence Expiry Date</label>
@@ -160,50 +192,50 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="driverPhoto">Driver photo</label>
-                  <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="file" (change)="handleFileInput($event.target.files)" name="driverPhoto" [(ngModel)]="driverData.photo">
                 </div>
               </div>
               <!-- Add here -->
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="proofAddress">Proof of address</label>
-                  <input type="file" id="proofAddress" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="proofAddress" (change)="handleFileInput($event.target.files)" name="addressProof" [(ngModel)]="driverData.proofOfAddress">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="policeDisclosure">Police disclosure</label>
-                  <input type="file" id="policeDisclosure" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="policeDisclosure" (change)="handleFileInput($event.target.files)" name="policeDisclosure" [(ngModel)]="driverData.policeDisclose">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="agreement">Agreement</label>
-                  <input type="file" id="agreement" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="agreement" (change)="handleFileInput($event.target.files)" name="agree" [(ngModel)]="driverData.agreement">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePhoto">Licence photo</label>
-                  <input type="file" id="licencePhoto" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="licencePhoto" (change)="handleFileInput($event.target.files)" name="licPhoto" [(ngModel)]="driverData.licencePhoto">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePaper">Licence paper</label>
-                  <input type="file" id="licencePaper" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="licencePaper" (change)="handleFileInput($event.target.files)" name="licPaper" [(ngModel)]="driverData.licencePaper">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="pcoLicence">PCO licence</label>
-                  <input type="file" id="pcoLicence" (change)="handleFileInput($event.target.files)">
+                  <input type="file" id="pcoLicence" (change)="handleFileInput($event.target.files)" name="licPCO" [(ngModel)]="driverData.pcoLicence">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
-                  <label for="insurence">Insurence</label>
-                  <input type="file" id="insurence" (change)="handleFileInput($event.target.files)">
+                  <label for="insurence">Insurance</label>
+                  <input type="file" id="insurence" (change)="handleFileInput($event.target.files)" name="insurence" [(ngModel)]="driverData.insurance">
                 </div>
               </div>
             </div>
@@ -226,9 +258,9 @@
                 <div class="form-group col-md-4 col-sm-6 col-xs-12">
                   <label for="crb">CRB</label>
                   <div class="">
-                    <select class="form-control" id="crb">
-                      <option>Yes</option>
-                      <option>No</option>
+                    <select class="form-control" id="crb" name="selectCRB" [(ngModel)]="driverData.crb">
+                      <option value='yes'>Yes</option>
+                      <option value='no'>No</option>
                     </select>
                   </div>
                 </div>
@@ -236,60 +268,60 @@
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
                   <label for="delivery">Delivery</label>
                   <div class="">
-                    <select class="form-control" id="delivery">
-                      <option>Yes</option>
-                      <option>No</option>
+                    <select class="form-control" id="delivery" name="selectDelivery" [(ngModel)]="driverData.delivery">
+                      <option value='yes'>Yes</option>
+                      <option value='no'>No</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <label for="female">Female</label>
                     <div class="">
-                      <select class="form-control" id="female">
-                        <option>Yes</option>
-                        <option>No</option>
+                      <select class="form-control" id="female" name="femele" [(ngModel)]="driverData.female">
+                        <option value='yes'>Yes</option>
+                        <option value='no'>No</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-group col-md-4 col-sm-6 col-xs-12">
                       <label for="luggage">Luggage</label>
                       <div class="">
-                        <select class="form-control" id="luggage">
-                          <option>Yes</option>
-                          <option>No</option>
+                        <select class="form-control" id="luggage" name="lugg" [(ngModel)]="driverData.luggage">
+                          <option value='yes'>Yes</option>
+                          <option value='no'>No</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group col-md-4 col-sm-6 col-xs-12">
                         <label for="nhs">NHS</label>
                         <div class="">
-                          <select class="form-control" id="nhs">
-                            <option>Yes</option>
-                            <option>No</option>
+                          <select class="form-control" id="nhs" name="selectNHS" [(ngModel)]="driverData.nhs">
+                            <option value='yes'>Yes</option>
+                            <option value='no'>No</option>
                           </select>
                         </div>
                       </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="file">Pets</label>
-                  <input type="text" id="pets" class="form-control" placeholder="" name="pets" >
+                  <input type="text" id="pets" class="form-control" placeholder="" name="selectPets" [(ngModel)]="driverData.pets">
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                  <label for="unformed">Unformed</label>
+                  <label for="unformed">Uniformed</label>
                   <div class="">
-                    <select class="form-control" id="unformed">
-                      <option>Yes</option>
-                      <option>No</option>
+                    <select class="form-control" id="unformed" name="uniform" [(ngModel)]="driverData.uniformed">
+                      <option value='yes'>Yes</option>
+                      <option value='no'>No</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <label for="topman">Topman</label>
                     <div class="">
-                      <select class="form-control" id="topman">
-                        <option>Yes</option>
-                        <option>No</option>
+                      <select class="form-control" id="topman" name="topMan" [(ngModel)]="driverData.topman">
+                        <option value='yes'>Yes</option>
+                        <option value='no'>No</option>
                       </select>
                     </div>
                   </div>
