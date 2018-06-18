@@ -7,6 +7,8 @@ import { AddDriverDataModel } from '../model/driverData.model';
 import { BaseApiService } from '../../common/baseApi.service';
 import { DriverService } from '../../common/driver.service';
 
+import { Observable } from 'rxjs/Observable';
+
 @Component({
   selector: 'app-add-driver',
   templateUrl: './add-driver.component.html',
@@ -16,15 +18,16 @@ export class AddDriverComponent implements OnInit {
 
   @ViewChild('personalDetails') personalDetails: NgForm;
   @ViewChild('licencing') licencing: NgForm;
-
+  @ViewChild('fileInput') fileInput;
+  // queue: Observable<FileQueueObject[]>;
   driverId: string;
   driverData: AddDriverDataModel[] = [];
   statesList: any[] = [];
   countryList: any[] = [];
   cityList: any[] = [];
 
-  constructor(private fileUploadService: FileUploadService, private route: ActivatedRoute,
-    private baseApiService: BaseApiService, private driverService: DriverService) { }
+  constructor(private route: ActivatedRoute,
+    private baseApiService: BaseApiService, private driverService: DriverService, public uploader: FileUploadService) { }
 
   public hireDateOptions: IMyDpOptions = {
     // other options...
@@ -54,12 +57,19 @@ export class AddDriverComponent implements OnInit {
   fileToUpload: File = null;
 
   handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+    // this.fileToUpload = files.item(0);
+    // handle for png jpg pdf
+    this.uploadFileToActivity();
   }
 
   uploadFileToActivity() {
-    this.fileUploadService.postFile(this.fileToUpload).subscribe(data => {
+    const userId = this.baseApiService.getUserId();
+    const apiToken = this.baseApiService.getApiToken();
+    const fileBrowser = this.fileInput.nativeElement;
+    // this.uploader.addToQueue(fileBrowser.files);
+    this.uploader.postFile(fileBrowser.files, userId, apiToken).subscribe(data => {
       // do something, if upload success
+      console.log(data);
       }, error => {
         console.log(error);
       });
@@ -69,6 +79,7 @@ export class AddDriverComponent implements OnInit {
       // call service
   }
   ngOnInit() {
+    // this.queue = this.uploader.queue;
     const userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
     this.driverService.loadState(userId, apiToken).subscribe(response => {
@@ -95,6 +106,7 @@ export class AddDriverComponent implements OnInit {
       });
     } else {
       this.driverId = '';
+
     }
   }
 

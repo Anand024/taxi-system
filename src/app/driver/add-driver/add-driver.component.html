@@ -192,7 +192,8 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="driverPhoto">Driver photo</label>
-                  <input type="file" id="file" (change)="handleFileInput($event.target.files)" name="driverPhoto" [(ngModel)]="driverData.photo">
+                  <input type="file" #fileInput multiple (change)="uploadFileToActivity()" name="driverPhotos" [(ngModel)]="driverData.photo"/>
+                  <!-- <input type="file" id="file" (change)="handleFileInput($event.target.files)" name="driverPhoto" [(ngModel)]="driverData.photo"> -->
                 </div>
               </div>
               <!-- Add here -->
