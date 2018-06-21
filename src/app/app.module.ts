@@ -23,6 +23,7 @@ import { FileUploadService } from './common/service/file-upload.service';
 import { ChangePasswordComponent } from './nav/change-password/change-password.component';
 import { BaseApiService } from './common/baseApi.service';
 import { DeleteModalComponent } from './common/delete/delete-modal/delete-modal.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DeleteModalComponent } from './common/delete/delete-modal/delete-modal.
     HttpModule,
     MyDatePickerModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [AuthService, DriverService, FileUploadService, BaseApiService],
   bootstrap: [AppComponent]

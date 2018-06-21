@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 import { AddDriverDataModel } from '../model/driverData.model';
 import { BaseApiService } from '../../common/baseApi.service';
 import { DriverService } from '../../common/driver.service';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Observable } from 'rxjs/Observable';
 import { HttpEventType } from '@angular/common/http';
 
@@ -29,8 +29,9 @@ export class AddDriverComponent implements OnInit {
   statesList: any[] = [];
   countryList: any[] = [];
   cityList: any[] = [];
+  cabList: any[] = [];
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute, private spinnerService: Ng4LoadingSpinnerService,
     private baseApiService: BaseApiService, private driverService: DriverService, public uploader: FileUploadService) {
       this.driverData = new AddDriverDataModel();
     }
@@ -65,6 +66,7 @@ export class AddDriverComponent implements OnInit {
   addOrUpdateDriverData(isAdd: boolean) {
     const userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
+    this.setDefault();
     this.setDefaultFields();
     if (isAdd) {
       this.driverService.saveDriverData(userId, this.driverData, apiToken).subscribe(res => {
@@ -72,6 +74,9 @@ export class AddDriverComponent implements OnInit {
       });
     } else {
       this.driverService.updateDriverData(userId, this.driverData, apiToken).subscribe(res => {
+        if (res) {
+          this.driverData = res;
+        }
         console.log('update success');
       });
     }
@@ -82,8 +87,8 @@ export class AddDriverComponent implements OnInit {
     this.driverData.driverAttribteId = 0;
     this.driverData.driverDocumentId = 0;
     this.driverData.driverId = 0;
-    this.driverData.startDate = this.driverData.startDate.epoc;
-    this.driverData.driverLicenceExpiry = this.driverData.driverLicenceExpiry.epoc;
+    this.driverData.startDate = this.driverData.startDate.epoc || 0;
+    this.driverData.driverLicenceExpiry = this.driverData.driverLicenceExpiry.epoc || 0;
   }
 
   handleFileInput(files: FileList) {
@@ -134,36 +139,85 @@ export class AddDriverComponent implements OnInit {
         this.driverData = res;
       });
   }
+
+  setDefault() {
+    this.driverData.mobileNo = this.driverData.mobileNo || 0;
+    this.driverData.firstName = this.driverData.firstName || '';
+      this.driverData.lastName = this.driverData.lastName || '';
+      this.driverData.countryId = this.driverData.countryId || 0;
+      this.driverData.mobileNo = this.driverData.mobileNo || 0;
+      this.driverData.password = this.driverData.password || '';
+      this.driverData.stateId = this.driverData.stateId || 0;
+      this.driverData.cityId = this.driverData.cityId || 0;
+      this.driverData.sex = this.driverData.sex || '';
+      this.driverData.email = this.driverData.email || '';
+      this.driverData.zip = this.driverData.zip || '';
+      this.driverData.pets = this.driverData.pets || '';
+      this.driverData.status = this.driverData.status || 0;
+      this.driverData.photo = this.driverData.photo || '';
+      this.driverData.policeDisclose = this.driverData.policeDisclose || '';
+      this.driverData.proofOfAddress = this.driverData.proofOfAddress || '';
+      this.driverData.startDate = this.driverData.startDate || 0;
+      this.driverData.street = this.driverData.street || '';
+      this.driverData.topman = this.driverData.topman || '';
+      this.driverData.uniformed = this.driverData.uniformed || '';
+      this.driverData.otherPhone = this.driverData.otherPhone || 0;
+      this.driverData.crb = this.driverData.crb || '';
+      this.driverData.driverLicenceExpiry = this.driverData.driverLicenceExpiry || 0;
+      this.driverData.aliasName = this.driverData.aliasName || '';
+      this.driverData.cabId = this.driverData.cabId || 0;
+      this.driverData.agreement = this.driverData.agreement || '';
+      this.driverData.licencePaper = this.driverData.licencePaper || '';
+      this.driverData.licencePhoto = this.driverData.licencePhoto || '';
+      this.driverData.pcoLicence = this.driverData.pcoLicence || '';
+      this.driverData.insurance = this.driverData.insurance || '';
+      this.driverData.delivery = this.driverData.delivery || '';
+      this.driverData.female = this.driverData.female || '';
+      this.driverData.luggage = this.driverData.luggage || '';
+      this.driverData.nhs = this.driverData.nhs || '';
+      this.driverData.driverLicenceNumber = this.driverData.driverLicenceNumber || '';
+  }
+
   ngOnInit() {
+    this.spinnerService.show();
+    // this.setDefault();
     // this.queue = this.uploader.queue;
     this.userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
-    this.driverService.loadState(this.userId, apiToken).subscribe(response => {
+    let stateData = this.driverService.loadState(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.statesList = response;
       }
     });
-    this.driverService.loadCountry(this.userId, apiToken).subscribe(response => {
+    let countryData = this.driverService.loadCountry(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.countryList = response;
       }
     });
-    this.driverService.loadCity(this.userId, apiToken).subscribe(response => {
+    let cityData = this.driverService.loadCity(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.cityList = response;
       }
     });
+    // this.driverService.getCabList(this.userId, apiToken).subscribe(res => {
+    //   if (res) {
+    //     this.cabList = res;
+    //   }
+    // });
+
     if (this.route.routeConfig.path === 'driver/editDriver/:driverId') {
       this.route && this.route.params.subscribe((params) => {
         this.driverId = params['driverId'];
         if(this.driverId) {
           this.getDriverDetails(this.driverId);
+          this.spinnerService.hide();
         }
       });
     } else {
       this.driverId = '';
-
+      this.spinnerService.hide();
     }
+    
   }
 
 }

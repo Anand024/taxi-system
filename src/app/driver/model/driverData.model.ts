@@ -70,5 +70,40 @@ export class AddDriverDataModel {
         // public proofOfAddress: string, public sex: string, public startDate: string,
         // public stateId: number, public status: number, public street: string, public topman: string,
         // public uniformed: string, public zip: string
-    ) {}
+    ) {
+        // this.firstName = this.firstName || '';
+        // this.lastName = this.lastName || '';
+        // this.countryId = this.countryId || 0;
+        // this.mobileNo = this.mobileNo || 0;
+        // this.password = this.password || '';
+        // this.stateId = this.stateId || 0;
+        // this.cityId = this.cityId || 0;
+        // this.sex = this.sex || '';
+        // this.email = this.email || '';
+        // this.zip = this.zip || '';
+        // this.pets = this.pets || '';
+        // this.status = this.status || 0;
+        // this.photo = this.photo || '';
+        // this.policeDisclose = this.policeDisclose || '';
+        // this.proofOfAddress = this.proofOfAddress || '';
+        // this.startDate = this.startDate || 0;
+        // this.street = this.street || '';
+        // this.topman = this.topman || '';
+        // this.uniformed = this.uniformed || '';
+        // this.otherPhone = this.otherPhone || 0;
+        // this.crb = this.crb || '';
+        // this.driverLicenceExpiry = this.driverLicenceExpiry || 0;
+        // this.aliasName = this.aliasName || '';
+        // this.cabId = this.cabId || 0;
+        // this.agreement = this.agreement || '';
+        // this.licencePaper = this.licencePaper || '';
+        // this.licencePhoto = this.licencePhoto || '';
+        // this.pcoLicence = this.pcoLicence || '';
+        // this.insurance = this.insurance || '';
+        // this.delivery = this.delivery || '';
+        // this.female = this.female || '';
+        // this.luggage = this.luggage || '';
+        // this.nhs = this.nhs || '';
+        // this.driverLicenceNumber = this.driverLicenceNumber || '';
+    }
 }

@@ -50,6 +50,16 @@ export class DriverService {
         search: this.qparams }).map(this.extractData).catch(this.handleError);
   }
 
+  getCabList(userId: any, apiToken: any): Observable<any> {
+    const userIdVal = userId;
+    const requestURL  =  'http://18.219.43.223:8080/taxi/common/cabsList';
+    this.qparams.set('userId', userIdVal);
+    return this.http.get(requestURL,
+      { withCredentials: true, headers: new Headers({
+        'Content-Type': 'application/json',
+        'api_key': apiToken }),
+        search: this.qparams }).map(this.extractData).catch(this.handleError);
+  }
   saveDriverData(userId: any, driverData: any, apiToken: any): Observable<any> {
     const requestURL  =  'http://18.219.43.223:8080/taxi/driver/add';
     this.qparams.set('userId', userId);

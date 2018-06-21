@@ -80,7 +80,7 @@
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
                 <label for="country">Country</label>
                 <div class="">
-                  <select class="form-control" id="country" [(ngModel)]="driverData.country" name="country" #country="ngModel">
+                  <select class="form-control" id="country" [(ngModel)]="driverData.countryId" name="country" #country="ngModel">
                     <option *ngFor="let country of countryList" [ngValue]="country.countriId">{{country.name}}</option>
                   </select>
                 </div>
@@ -88,7 +88,7 @@
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
                 <label for="state">State</label>
                 <div class="">
-                  <select class="form-control" id="state" [(ngModel)]="driverData.state" name="state" >
+                  <select class="form-control" id="state" [(ngModel)]="driverData.stateId" name="state" >
                     <option *ngFor="let state of statesList" [ngValue]="state.stateId">{{state.stateName}}</option>
                   </select>
                 </div>
@@ -96,7 +96,7 @@
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
                 <label for="city">City</label>
                 <div class="">
-                  <select class="form-control" id="city" [(ngModel)]="driverData.city" #city="ngModel" name="city">
+                  <select class="form-control" id="city" [(ngModel)]="driverData.cityId" #city="ngModel" name="city">
                     <option *ngFor="let city of cityList" [ngValue]="city.cityId">{{city.citieName}}</option>
                   </select>
                 </div>
@@ -117,10 +117,7 @@
                   <label for="vehicle">Vehicle</label>
                   <div class="">
                     <select class="form-control" id="cabId" [(ngModel)]="driverData.cabId" #cabId="ngModel" name="cabId">
-                      <option>Select</option>
-                      <option value="123">Cab1</option>
-                      <option value="234">Cab2</option>
-                      <option value="456">Cab3</option>
+                      <option *ngFor="let cab of cabList" [ngValue]="cab.cabId">{{cab.cabType}}</option>
                     </select>
                   </div>
                 </div>
@@ -359,4 +356,3 @@
       </div>
   </div>
 </div>
-<app-delete-modal></app-delete-modal>

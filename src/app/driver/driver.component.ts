@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { DriverService } from '../common/driver.service';
 import { BaseApiService } from '../common/baseApi.service';
 import { DataTableDirective } from 'angular-datatables';
@@ -46,10 +47,11 @@ export class DriverComponent implements OnInit, OnDestroy {
     // new DriverModel('Suraj', 'Gest', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
     // new DriverModel('Prakash', 'Sereb', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male')
 
-  constructor(private http: HttpClient, private driverService: DriverService,
+  constructor(private http: HttpClient, private driverService: DriverService, private spinnerService: Ng4LoadingSpinnerService,
     private chRef: ChangeDetectorRef, private router: Router, private baseApiService: BaseApiService) {}
 
   ngOnInit() {
+    this.spinnerService.show();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 8
@@ -57,12 +59,15 @@ export class DriverComponent implements OnInit, OnDestroy {
 
     const userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
-    this.driverService.loadAllDriverData(userId, apiToken).subscribe(res => {
+    let result = this.driverService.loadAllDriverData(userId, apiToken).subscribe(res => {
       if (res) {
         this.driverData = res;
         this.dtTrigger.next();
       }
     });
+    if (result) {
+      this.spinnerService.hide();
+    }
   }
 
   editDriver(event: Event, driver: DriverModel) {
