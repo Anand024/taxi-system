@@ -17,7 +17,7 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="form-group is-required-short">
                     <label class="control-label">Password</label>
-                    <input type="text" id="password" class="form-control" placeholder="" [(ngModel)]="driverData.password" name="passwrd" maxlength="60"
+                    <input type="password" id="password" class="form-control" placeholder="" [(ngModel)]="driverData.password" name="passwrd" maxlength="60"
                       required>
                   </div>
                 </div>
@@ -124,6 +124,15 @@
                     </select>
                   </div>
                 </div>
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                  <label for="status">Status</label>
+                  <div class="">
+                    <select class="form-control" id="statusId" [(ngModel)]="driverData.status" #statusId="ngModel" name="statusId">
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
+                </div>
             </div>
           </div>
         </form>
@@ -166,12 +175,12 @@
                   <input type="text" id="driverInsurence" class="form-control" placeholder="" name="driverInsurence" [(ngModel)]="driverData.insurance" required>
                 </div>
               </div> -->
-              <div class="col-md-4 col-sm-6 col-xs-12">
+              <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
                   <label class="control-label">Driver Insurence Expiry Date</label>
                   <my-date-picker name="insurenceExpiryDate" [options]="InsurenceExpiryDateOptions" required></my-date-picker>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </form>
@@ -192,7 +201,12 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="driverPhoto">Driver photo</label>
-                  <input type="file" #fileInput multiple (change)="uploadFileToActivity()" name="driverPhotos" [(ngModel)]="driverData.photo"/>
+                  <label class="btn btn-default">
+                    <input type="file" (change)="selectFile($event)" name="photo">
+                  </label>
+                    
+                  <!-- <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button> -->
+                  <!-- <input type="file" #fileInput multiple (change)="uploadFileToActivity()" name="driverPhotos" [(ngModel)]="driverData.photo"/> -->
                   <!-- <input type="file" id="file" (change)="handleFileInput($event.target.files)" name="driverPhoto" [(ngModel)]="driverData.photo"> -->
                 </div>
               </div>
@@ -200,43 +214,43 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="proofAddress">Proof of address</label>
-                  <input type="file" id="proofAddress" (change)="handleFileInput($event.target.files)" name="addressProof" [(ngModel)]="driverData.proofOfAddress">
+                  <input type="file" id="proofAddress" (change)="selectFile($event)" name="proofOfAddress">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="policeDisclosure">Police disclosure</label>
-                  <input type="file" id="policeDisclosure" (change)="handleFileInput($event.target.files)" name="policeDisclosure" [(ngModel)]="driverData.policeDisclose">
+                  <input type="file" id="policeDisclosure" (change)="selectFile($event)" name="policeDisclose">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="agreement">Agreement</label>
-                  <input type="file" id="agreement" (change)="handleFileInput($event.target.files)" name="agree" [(ngModel)]="driverData.agreement">
+                  <input type="file" id="agreement" (change)="selectFile($event)" name="agreement">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePhoto">Licence photo</label>
-                  <input type="file" id="licencePhoto" (change)="handleFileInput($event.target.files)" name="licPhoto" [(ngModel)]="driverData.licencePhoto">
+                  <input type="file" id="licencePhoto" (change)="selectFile($event)" name="licencePhoto">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePaper">Licence paper</label>
-                  <input type="file" id="licencePaper" (change)="handleFileInput($event.target.files)" name="licPaper" [(ngModel)]="driverData.licencePaper">
+                  <input type="file" id="licencePaper" (change)="selectFile($event)" name="licencePaper">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="pcoLicence">PCO licence</label>
-                  <input type="file" id="pcoLicence" (change)="handleFileInput($event.target.files)" name="licPCO" [(ngModel)]="driverData.pcoLicence">
+                  <input type="file" id="pcoLicence" (change)="selectFile($event)" name="pcoLicence">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="insurence">Insurance</label>
-                  <input type="file" id="insurence" (change)="handleFileInput($event.target.files)" name="insurence" [(ngModel)]="driverData.insurance">
+                  <input type="file" id="insurence" (change)="selectFile($event)" name="insurance">
                 </div>
               </div>
             </div>
@@ -336,12 +350,13 @@
   <div class="row mt-1">
       <div class="col-md-12 col-sm-12 col-xs-12 m-t-10">
           <button type="button" class="btn btn-default" routerLink="/driver"> Cancel</button>
-          <button type="button" style="float: right;" *ngIf="!driverId" class="btn btn-primary btn-xs pull-right m-r-10">
+          <button type="button" style="float: right;" *ngIf="!driverId" (click)="addOrUpdateDriverData(true)" class="btn btn-primary btn-xs pull-right m-r-10">
               <span class="letter-space-small"></span> Save
           </button>
-          <button type="button" style="float: right;" *ngIf="driverId" class="btn btn-primary btn-xs pull-right m-r-10">
+          <button type="button" style="float: right;" *ngIf="driverId" (click)="addOrUpdateDriverData(false)" class="btn btn-primary btn-xs pull-right m-r-10">
               <span class="letter-space-small"></span> Update
           </button>
       </div>
   </div>
 </div>
+<app-delete-modal></app-delete-modal>

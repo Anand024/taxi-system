@@ -22,6 +22,7 @@ import { DriverService } from './common/driver.service';
 import { FileUploadService } from './common/service/file-upload.service';
 import { ChangePasswordComponent } from './nav/change-password/change-password.component';
 import { BaseApiService } from './common/baseApi.service';
+import { DeleteModalComponent } from './common/delete/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BaseApiService } from './common/baseApi.service';
     ActivityDashboardComponent,
     HeaderLinkComponent,
     AddDriverComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

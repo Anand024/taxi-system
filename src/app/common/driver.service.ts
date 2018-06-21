@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { AddDriverDataModel } from '../driver/model/driverData.model';
 
 @Injectable()
 export class DriverService {
@@ -23,16 +24,18 @@ export class DriverService {
               .catch(this.handleError);
   }
 
-  loadDriverDataById(driverId: string): Observable<any> {
-            const requestURL  =  '';
-            const qParams = { 'driverId': driverId };
+  loadDriverDataById(driverId: string, userId: string, apiToken: any): Observable<any> {
+            const requestURL  =  'http://18.219.43.223:8080/taxi/driver/details';
+            // const qParams = { 'id': driverId, 'userId': userId};
+            this.qparams.set('id', driverId);
+            this.qparams.set('userId', userId);
             return this.http.get(requestURL, {
               withCredentials: true,
-              params: qParams,
               headers: new Headers({
-                'Content-Type': 'application/json'
-              })
-            }).map(this.extractData)
+                'Content-Type': 'application/json',
+                'api_key': apiToken
+              }),
+              search: this.qparams}).map(this.extractData)
               .catch(this.handleError);
   }
 
@@ -41,6 +44,26 @@ export class DriverService {
     const requestURL  =  'http://18.219.43.223:8080/taxi/common/stateList';
     this.qparams.set('userId', userIdVal);
     return this.http.get(requestURL,
+      { withCredentials: true, headers: new Headers({
+        'Content-Type': 'application/json',
+        'api_key': apiToken }),
+        search: this.qparams }).map(this.extractData).catch(this.handleError);
+  }
+
+  saveDriverData(userId: any, driverData: any, apiToken: any): Observable<any> {
+    const requestURL  =  'http://18.219.43.223:8080/taxi/driver/add';
+    this.qparams.set('userId', userId);
+    return this.http.post(requestURL, driverData,
+      { withCredentials: true, headers: new Headers({
+        'Content-Type': 'application/json',
+        'api_key': apiToken }),
+        search: this.qparams }).map(this.extractData).catch(this.handleError);
+  }
+
+  updateDriverData(userId: any, driverData: any, apiToken: any): Observable<any> {
+    const requestURL  =  'http://18.219.43.223:8080/taxi/driver/update';
+    this.qparams.set('userId', userId);
+    return this.http.post(requestURL, driverData,
       { withCredentials: true, headers: new Headers({
         'Content-Type': 'application/json',
         'api_key': apiToken }),
