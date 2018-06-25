@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker';
 import { FileUploadService } from '../../common/service/file-upload.service';
-import { ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AddDriverDataModel } from '../model/driverData.model';
 import { BaseApiService } from '../../common/baseApi.service';
 import { DriverService } from '../../common/driver.service';
@@ -18,7 +18,7 @@ import { HttpEventType } from '@angular/common/http';
 export class AddDriverComponent implements OnInit {
 
   @ViewChild('personalDetails') personalDetails: NgForm;
-  @ViewChild('licencing') licencing: NgForm;
+  private licencing: FormGroup;
   @ViewChild('fileInput') fileInput;
   selectedFiles: FileList;
   currentFileUpload: File;
@@ -30,9 +30,14 @@ export class AddDriverComponent implements OnInit {
   countryList: any[] = [];
   cityList: any[] = [];
   cabList: any[] = [];
+  selectedFile: {
+    'photo': '',
+    'agreement': ''
+  };
 
-  constructor(private route: ActivatedRoute, private spinnerService: Ng4LoadingSpinnerService,
-    private baseApiService: BaseApiService, private driverService: DriverService, public uploader: FileUploadService) {
+  constructor(private route: ActivatedRoute, private spinnerService: Ng4LoadingSpinnerService, private router: Router,
+    private baseApiService: BaseApiService, private driverService: DriverService, public uploader: FileUploadService,
+    private formBuilder: FormBuilder) {
       this.driverData = new AddDriverDataModel();
     }
 
@@ -75,13 +80,31 @@ export class AddDriverComponent implements OnInit {
     } else {
       this.driverService.updateDriverData(userId, this.driverData, apiToken).subscribe(res => {
         if (res) {
+          this.setDriverData(res);
           this.driverData = res;
         }
         console.log('update success');
       });
     }
+    this.router.navigate([`/driver`]);
   }
 
+  setDriverData = (res) => {
+    this.driverData.agreement = res.agreement || '';
+    this.driverData.insurance = res.insurance || '';
+    this.driverData.licencePaper = res.licencePaper || '';
+    this.driverData.licencePhoto = res.licencePhoto || '';
+    this.driverData.pcoLicence = res.pcoLicence || '';
+    this.driverData.photo = res.photo || '';
+    this.driverData.policeDisclose = res.policeDisclose || '';
+    this.driverData.proofOfAddress = res.proofOfAddress || '';
+    // this.driverData.startDate = new Date();
+}
+
+// setDatesetDate(): void {
+//   // Set today date using the patchValue function
+//   this.driverData.startDate = {date: {year: 2018, month: 10, day: 9}};
+// }
   setDefaultFields() {
     this.driverData.address = 'Rajajinagar';
     this.driverData.driverAttribteId = 0;
@@ -107,6 +130,7 @@ export class AddDriverComponent implements OnInit {
   setUploadFilesValue(name) {
 
   }
+
   upload(name: string) {
     const apiToken = this.baseApiService.getApiToken();
     this.currentFileUpload = this.selectedFiles.item(0);
@@ -137,6 +161,7 @@ export class AddDriverComponent implements OnInit {
       const apiToken = this.baseApiService.getApiToken();
       this.driverService.loadDriverDataById(driverId, this.userId, apiToken).subscribe(res => {
         this.driverData = res;
+        this.setDate(this.driverData.startDate, this.driverData.driverLicenceExpiry);
       });
   }
 
@@ -178,32 +203,42 @@ export class AddDriverComponent implements OnInit {
       this.driverData.driverLicenceNumber = this.driverData.driverLicenceNumber || '';
   }
 
+  setDate(startDate, expiryDate): void {
+
+    let sDate = new Date(startDate);
+    let eDate = new Date(expiryDate);
+
+    // Set today using the setValue function
+    // let date: Date = new Date();
+    this.driverData.startDate = {date: {year: sDate.getFullYear(), month: sDate.getMonth() + 1 , day: sDate.getDate()}};
+    this.driverData.driverLicenceExpiry = {date: {year: eDate.getFullYear(), month: eDate.getMonth() + 1 , day: eDate.getDate()}};
+
+}
   ngOnInit() {
     this.spinnerService.show();
-    // this.setDefault();
-    // this.queue = this.uploader.queue;
+
     this.userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
-    let stateData = this.driverService.loadState(this.userId, apiToken).subscribe(response => {
+    this.driverService.loadState(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.statesList = response;
       }
     });
-    let countryData = this.driverService.loadCountry(this.userId, apiToken).subscribe(response => {
+    this.driverService.loadCountry(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.countryList = response;
       }
     });
-    let cityData = this.driverService.loadCity(this.userId, apiToken).subscribe(response => {
+    this.driverService.loadCity(this.userId, apiToken).subscribe(response => {
       if (response) {
         this.cityList = response;
       }
     });
-    // this.driverService.getCabList(this.userId, apiToken).subscribe(res => {
-    //   if (res) {
-    //     this.cabList = res;
-    //   }
-    // });
+    this.driverService.loadCabData(this.userId, apiToken).subscribe(res => {
+      if (res) {
+        this.cabList = res;
+      }
+    });
 
     if (this.route.routeConfig.path === 'driver/editDriver/:driverId') {
       this.route && this.route.params.subscribe((params) => {

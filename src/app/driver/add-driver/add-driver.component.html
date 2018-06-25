@@ -198,9 +198,10 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="driverPhoto">Driver photo</label>
-                  <label class="btn btn-default">
-                    <input type="file" (change)="selectFile($event)" name="photo">
-                  </label>
+                    <input type="file" class="file-width" (change)="selectFile($event)" name="photo">
+                    <div id="fileName">
+                      <label id="fileLabel">{{ driverData.photo || 'No file chosen'}}</label>
+                    </div>
                     
                   <!-- <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button> -->
                   <!-- <input type="file" #fileInput multiple (change)="uploadFileToActivity()" name="driverPhotos" [(ngModel)]="driverData.photo"/> -->
@@ -211,43 +212,64 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="proofAddress">Proof of address</label>
-                  <input type="file" id="proofAddress" (change)="selectFile($event)" name="proofOfAddress">
+                  <input type="file" class="file-width" id="proofAddress" (change)="selectFile($event)" name="proofOfAddress">
+                  <div id="fileName">
+                    <label id="fileLabel">{{ driverData.proofOfAddress || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
-                  <label for="policeDisclosure">Police disclosure</label>
-                  <input type="file" id="policeDisclosure" (change)="selectFile($event)" name="policeDisclose">
+                  <div><label for="policeDisclosure">Police disclosure</label></div>
+                  <input type="file" class="file-width" id="policeDisclosure" (change)="selectFile($event)" name="policeDisclose">
+                  <div>
+                    <label id="fileLabel">{{ driverData.policeDisclose || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
-                  <label for="agreement">Agreement</label>
-                  <input type="file" id="agreement" (change)="selectFile($event)" name="agreement">
+                  <div><label for="agreement" id="agree-val" class="fileUpload">Agreement</label></div>
+                  <input type="file" class="file-width" id="agreement" (change)="selectFile($event)" name="agreement">
+                  <div>
+                    <label id="fileLabel">{{ driverData.agreement || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePhoto">Licence photo</label>
-                  <input type="file" id="licencePhoto" (change)="selectFile($event)" name="licencePhoto">
+                  <input type="file" class="file-width" id="licencePhoto" (change)="selectFile($event)" name="licencePhoto">
+                  <div>
+                    <label id="fileLabel">{{ driverData.licencePhoto || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="licencePaper">Licence paper</label>
-                  <input type="file" id="licencePaper" (change)="selectFile($event)" name="licencePaper">
+                  <input type="file" class="file-width" id="licencePaper" (change)="selectFile($event)" name="licencePaper">
+                  <div>
+                    <label id="fileLabel">{{ driverData.licencePaper || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="pcoLicence">PCO licence</label>
-                  <input type="file" id="pcoLicence" (change)="selectFile($event)" name="pcoLicence">
+                  <input type="file" class="file-width" id="pcoLicence" (change)="selectFile($event)" name="pcoLicence">
+                  <div>
+                    <label id="fileLabel">{{ driverData.pcoLicence || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="insurence">Insurance</label>
-                  <input type="file" id="insurence" (change)="selectFile($event)" name="insurance">
+                  <input type="file" class="file-width" id="insurence" (change)="selectFile($event)" name="insurance">
+                  <div>
+                    <label id="fileLabel">{{ driverData.insurance || 'No file chosen'}}</label>
+                  </div>
                 </div>
               </div>
             </div>

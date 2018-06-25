@@ -50,7 +50,7 @@ export class DriverService {
         search: this.qparams }).map(this.extractData).catch(this.handleError);
   }
 
-  getCabList(userId: any, apiToken: any): Observable<any> {
+  loadCabData(userId: any, apiToken: any): Observable<any> {
     const userIdVal = userId;
     const requestURL  =  'http://18.219.43.223:8080/taxi/common/cabsList';
     this.qparams.set('userId', userIdVal);
