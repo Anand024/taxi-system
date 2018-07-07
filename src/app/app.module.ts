@@ -24,6 +24,7 @@ import { ChangePasswordComponent } from './nav/change-password/change-password.c
 import { BaseApiService } from './common/baseApi.service';
 import { DeleteModalComponent } from './common/delete/delete-modal/delete-modal.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { AlertComponent } from './common/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     HeaderLinkComponent,
     AddDriverComponent,
     ChangePasswordComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

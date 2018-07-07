@@ -18,11 +18,20 @@ import { HttpEventType } from '@angular/common/http';
 export class AddDriverComponent implements OnInit {
 
   @ViewChild('personalDetails') personalDetails: NgForm;
-  private licencing: FormGroup;
+  @ViewChild('loginDetails') loginDetails: NgForm;
+  @ViewChild('licencing') licencing: NgForm;
+  // private licencing: FormGroup;
   @ViewChild('fileInput') fileInput;
+
+  private formInvalid: boolean;
+  private isLoginValid = false;
+  private isPersonalDetailsValid = false;
+  private isLicencingValid = false;
+
   selectedFiles: FileList;
   currentFileUpload: File;
   userId: string;
+  isProofOfAddressSelected = false;
   // queue: Observable<FileQueueObject[]>;
   driverId: string;
   driverData: AddDriverDataModel;
@@ -69,24 +78,26 @@ export class AddDriverComponent implements OnInit {
   fileToUpload: File = null;
 
   addOrUpdateDriverData(isAdd: boolean) {
-    const userId = this.baseApiService.getUserId();
-    const apiToken = this.baseApiService.getApiToken();
-    this.setDefault();
-    this.setDefaultFields();
-    if (isAdd) {
-      this.driverService.saveDriverData(userId, this.driverData, apiToken).subscribe(res => {
-        console.log('add success');
-      });
-    } else {
-      this.driverService.updateDriverData(userId, this.driverData, apiToken).subscribe(res => {
-        if (res) {
-          this.setDriverData(res);
-          this.driverData = res;
-        }
-        console.log('update success');
-      });
+    if (this.validateForm()) {
+      const userId = this.baseApiService.getUserId();
+      const apiToken = this.baseApiService.getApiToken();
+      this.setDefault();
+      this.setDefaultFields();
+      if (isAdd) {
+        this.driverService.saveDriverData(userId, this.driverData, apiToken).subscribe(res => {
+          console.log('add success');
+        });
+      } else {
+        this.driverService.updateDriverData(userId, this.driverData, apiToken).subscribe(res => {
+          if (res) {
+            this.setDriverData(res);
+            this.driverData = res;
+          }
+          console.log('update success');
+        });
+      }
+      this.router.navigate([`/driver`]);
     }
-    this.router.navigate([`/driver`]);
   }
 
   setDriverData = (res) => {
@@ -98,13 +109,15 @@ export class AddDriverComponent implements OnInit {
     this.driverData.photo = res.photo || '';
     this.driverData.policeDisclose = res.policeDisclose || '';
     this.driverData.proofOfAddress = res.proofOfAddress || '';
-    // this.driverData.startDate = new Date();
 }
 
-// setDatesetDate(): void {
-//   // Set today date using the patchValue function
-//   this.driverData.startDate = {date: {year: 2018, month: 10, day: 9}};
-// }
+  validateError(event) {
+    // for proofOfAddress error handling
+    const fileName = event.target.name;
+    if (fileName === 'proofOfAddress' && event.target.files.length === 0) {
+      this.isProofOfAddressSelected = true;
+    }
+  }
   setDefaultFields() {
     this.driverData.address = 'Rajajinagar';
     this.driverData.driverAttribteId = 0;
@@ -125,6 +138,10 @@ export class AddDriverComponent implements OnInit {
     const name = event.target.name;
     if (this.selectedFiles) {
       this.upload(name);
+    } else {
+      if (name === 'proofOfAddress') {
+        this.isProofOfAddressSelected = true;
+      }
     }
   }
   setUploadFilesValue(name) {
@@ -143,6 +160,16 @@ export class AddDriverComponent implements OnInit {
 
     this.selectedFiles = undefined;
   }
+
+  validateForm() {
+    if (this.loginDetails.valid && this.personalDetails.valid && this.licencing.valid) {
+      this.formInvalid = false;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   uploadFileToActivity() {
     const userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
@@ -168,48 +195,44 @@ export class AddDriverComponent implements OnInit {
   setDefault() {
     this.driverData.mobileNo = this.driverData.mobileNo || 0;
     this.driverData.firstName = this.driverData.firstName || '';
-      this.driverData.lastName = this.driverData.lastName || '';
-      this.driverData.countryId = this.driverData.countryId || 0;
-      this.driverData.mobileNo = this.driverData.mobileNo || 0;
-      this.driverData.password = this.driverData.password || '';
-      this.driverData.stateId = this.driverData.stateId || 0;
-      this.driverData.cityId = this.driverData.cityId || 0;
-      this.driverData.sex = this.driverData.sex || '';
-      this.driverData.email = this.driverData.email || '';
-      this.driverData.zip = this.driverData.zip || '';
-      this.driverData.pets = this.driverData.pets || '';
-      this.driverData.status = this.driverData.status || 0;
-      this.driverData.photo = this.driverData.photo || '';
-      this.driverData.policeDisclose = this.driverData.policeDisclose || '';
-      this.driverData.proofOfAddress = this.driverData.proofOfAddress || '';
-      this.driverData.startDate = this.driverData.startDate || 0;
-      this.driverData.street = this.driverData.street || '';
-      this.driverData.topman = this.driverData.topman || '';
-      this.driverData.uniformed = this.driverData.uniformed || '';
-      this.driverData.otherPhone = this.driverData.otherPhone || 0;
-      this.driverData.crb = this.driverData.crb || '';
-      this.driverData.driverLicenceExpiry = this.driverData.driverLicenceExpiry || 0;
-      this.driverData.aliasName = this.driverData.aliasName || '';
-      this.driverData.cabId = this.driverData.cabId || 0;
-      this.driverData.agreement = this.driverData.agreement || '';
-      this.driverData.licencePaper = this.driverData.licencePaper || '';
-      this.driverData.licencePhoto = this.driverData.licencePhoto || '';
-      this.driverData.pcoLicence = this.driverData.pcoLicence || '';
-      this.driverData.insurance = this.driverData.insurance || '';
-      this.driverData.delivery = this.driverData.delivery || '';
-      this.driverData.female = this.driverData.female || '';
-      this.driverData.luggage = this.driverData.luggage || '';
-      this.driverData.nhs = this.driverData.nhs || '';
-      this.driverData.driverLicenceNumber = this.driverData.driverLicenceNumber || '';
+    this.driverData.lastName = this.driverData.lastName || '';
+    this.driverData.countryId = this.driverData.countryId || 0;
+    this.driverData.mobileNo = this.driverData.mobileNo || 0;
+    this.driverData.password = this.driverData.password || '';
+    this.driverData.stateId = this.driverData.stateId || 0;
+    this.driverData.cityId = this.driverData.cityId || 0;
+    this.driverData.sex = this.driverData.sex || '';
+    this.driverData.email = this.driverData.email || '';
+    this.driverData.zip = this.driverData.zip || '';
+    this.driverData.pets = this.driverData.pets || '';
+    this.driverData.status = this.driverData.status || 0;
+    this.driverData.photo = this.driverData.photo || '';
+    this.driverData.policeDisclose = this.driverData.policeDisclose || '';
+    this.driverData.proofOfAddress = this.driverData.proofOfAddress || '';
+    this.driverData.startDate = this.driverData.startDate || 0;
+    this.driverData.street = this.driverData.street || '';
+    this.driverData.topman = this.driverData.topman || '';
+    this.driverData.uniformed = this.driverData.uniformed || '';
+    this.driverData.otherPhone = this.driverData.otherPhone || 0;
+    this.driverData.crb = this.driverData.crb || '';
+    this.driverData.driverLicenceExpiry = this.driverData.driverLicenceExpiry || 0;
+    this.driverData.aliasName = this.driverData.aliasName || '';
+    this.driverData.cabId = this.driverData.cabId || 0;
+    this.driverData.agreement = this.driverData.agreement || '';
+    this.driverData.licencePaper = this.driverData.licencePaper || '';
+    this.driverData.licencePhoto = this.driverData.licencePhoto || '';
+    this.driverData.pcoLicence = this.driverData.pcoLicence || '';
+    this.driverData.insurance = this.driverData.insurance || '';
+    this.driverData.delivery = this.driverData.delivery || '';
+    this.driverData.female = this.driverData.female || '';
+    this.driverData.luggage = this.driverData.luggage || '';
+    this.driverData.nhs = this.driverData.nhs || '';
+    this.driverData.driverLicenceNumber = this.driverData.driverLicenceNumber || '';
   }
 
   setDate(startDate, expiryDate): void {
-
-    let sDate = new Date(startDate);
-    let eDate = new Date(expiryDate);
-
-    // Set today using the setValue function
-    // let date: Date = new Date();
+    const sDate = new Date(startDate);
+    const eDate = new Date(expiryDate);
     this.driverData.startDate = {date: {year: sDate.getFullYear(), month: sDate.getMonth() + 1 , day: sDate.getDate()}};
     this.driverData.driverLicenceExpiry = {date: {year: eDate.getFullYear(), month: eDate.getMonth() + 1 , day: eDate.getDate()}};
 
@@ -249,10 +272,10 @@ export class AddDriverComponent implements OnInit {
         }
       });
     } else {
+      this.formInvalid = true;
       this.driverId = '';
       this.spinnerService.hide();
     }
-    
   }
 
 }

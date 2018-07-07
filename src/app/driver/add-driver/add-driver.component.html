@@ -6,19 +6,24 @@
             Login Details
           </h2>
         </div>
-        <form class="row detail border border-dark">
+        <form class="row detail border border-dark" #loginDetails="ngForm">
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Mobile Number</label>
-                  <input type="text" id="mobileNumber" class="form-control" placeholder="" [(ngModel)]="driverData.mobileNo" name="mobileNum" maxlength="60"
-                    required>
+                  <label class="control-label">Mobile Number *</label>
+                  <input type="text" class="form-control" [(ngModel)]="driverData.mobileNo" name="mobileNum" #mobileNum="ngModel" required="true" minlength="10" maxlength="10">
+                  <div *ngIf="mobileNum.errors && (mobileNum.dirty || mobileNum.touched)">
+                    <span class="text-danger" [hidden]="!mobileNum.errors.required">Mobile Number is required</span>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="form-group is-required-short">
-                    <label class="control-label">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="" [(ngModel)]="driverData.password" name="passwrd" maxlength="60"
-                      required>
+                    <label class="control-label">Password *</label>
+                    <input type="password" id="password" class="form-control" placeholder="" [(ngModel)]="driverData.password" name="passwrd" #passwrd="ngModel"
+                      required="true">
+                    <div *ngIf="passwrd.errors && (passwrd.dirty || passwrd.touched)">
+                      <span class="text-danger" [hidden]="!passwrd.errors.required">Password is required</span>
+                    </div>
                   </div>
                 </div>
         </form>
@@ -37,97 +42,130 @@
             <div class="row">
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">First Name</label>
-                  <input type="text" id="driverName" class="form-control" placeholder="" [(ngModel)]="driverData.firstName" name="first" maxlength="60"
-                    required>
+                  <label class="control-label">First Name *</label>
+                  <input type="text" id="driverName" class="form-control" placeholder="" [(ngModel)]="driverData.firstName" name="firstName" #firstName="ngModel"
+                    required="true">
+                  <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                    <span class="text-danger" [hidden]="!firstName.errors.required">First Name is required</span>
+                  </div>
                 </div>
               </div>
               <!-- Add here -->
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Last Name</label>
-                  <input type="text" id="driverLastName" class="form-control" placeholder="" [(ngModel)]="driverData.lastName" name="last" maxlength="60" 
-                    required>
+                  <label class="control-label">Last Name *</label>
+                  <input type="text" id="driverLastName" class="form-control" placeholder="" [(ngModel)]="driverData.lastName" name="lastName" #lastName="ngModel"
+                    required="true">
+                  <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+                    <span class="text-danger" [hidden]="!lastName.errors.required">Last Name is required</span>
+                  </div>
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                <label for="gender">Gender</label>
+                <label for="gender">Gender *</label>
                 <div class="">
-                  <select class="form-control" id="gender" [(ngModel)]="driverData.sex" name="sex">
+                  <select class="form-control" id="gender" [(ngModel)]="driverData.sex" name="sex" #sex="ngModel" required="true">
                     <option value='male'>Male</option>
                     <option value='female'>Female</option>
                   </select>
+                  <div *ngIf="sex.errors && (sex.dirty || sex.touched)">
+                    <span class="text-danger" [hidden]="!sex.errors.required">Please select gender</span>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Email</label>
-                  <input type="email" id="emailId" class="form-control" placeholder="" [(ngModel)]="driverData.email" name="emailId" required>
+                  <label class="control-label">Email *</label>
+                  <input type="email" id="emailId" class="form-control" placeholder="" [(ngModel)]="driverData.email" name="email" #email="ngModel" required="true">
+                </div>
+                <div *ngIf="email.errors && (email.dirty || email.touched)">
+                  <span class="text-danger" [hidden]="!email.errors.required">Email is required</span>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
                   <label class="control-label">Other Phone</label>
-                  <input type="text" id="otherPhone" class="form-control" placeholder="" [(ngModel)]="driverData.otherPhone" #otherPhone="ngModel" name="otherPhoneNum">
+                  <input type="text" id="otherPhone" class="form-control" placeholder="" [(ngModel)]="driverData.otherPhone" name="otherPhoneNum">
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
                   <label class="control-label">Alias Name</label>
-                  <input type="text" id="aliasName" class="form-control" placeholder="" [(ngModel)]="driverData.aliasName" #aliasName="ngModel" name="aliasNam">
+                  <input type="text" id="aliasName" class="form-control" placeholder="" [(ngModel)]="driverData.aliasName" name="aliasNam">
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                <label for="country">Country</label>
+                <label for="country">Country *</label>
                 <div class="">
-                  <select class="form-control" id="country" [(ngModel)]="driverData.countryId" name="country" #country="ngModel">
+                  <select class="form-control" id="country" [(ngModel)]="driverData.countryId" name="country" #country="ngModel" required="true">
                     <option *ngFor="let country of countryList" [ngValue]="country.countriId">{{country.name}}</option>
                   </select>
+                  <div *ngIf="country.errors && (country.dirty || country.touched)">
+                      <span class="text-danger" [hidden]="!country.errors.required">Country is required</span>
+                    </div>
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                <label for="state">State</label>
+                <label for="state">State *</label>
                 <div class="">
-                  <select class="form-control" id="state" [(ngModel)]="driverData.stateId" name="state" >
+                  <select class="form-control" id="state" [(ngModel)]="driverData.stateId" name="state" #state="ngModel" required="true">
                     <option *ngFor="let state of statesList" [ngValue]="state.stateId">{{state.stateName}}</option>
                   </select>
+                  <div *ngIf="state.errors && (state.dirty || state.touched)">
+                    <span class="text-danger" [hidden]="!state.errors.required">State is required</span>
+                  </div>
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                <label for="city">City</label>
+                <label for="city">City *</label>
                 <div class="">
-                  <select class="form-control" id="city" [(ngModel)]="driverData.cityId" #city="ngModel" name="city">
+                  <select class="form-control" id="city" [(ngModel)]="driverData.cityId" #city="ngModel" name="city" required="true">
                     <option *ngFor="let city of cityList" [ngValue]="city.cityId">{{city.citieName}}</option>
                   </select>
+                  <div *ngIf="city.errors && (city.dirty || city.touched)">
+                      <span class="text-danger" [hidden]="!city.errors.required">City is required</span>
+                    </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Pin Code</label>
-                  <input type="text" id="pinCode" class="form-control" placeholder="" [(ngModel)]="driverData.zip" #pinCode="ngModel" name="pin" required>
+                  <label class="control-label">Pin Code *</label>
+                  <input type="text" id="pinCode" class="form-control" placeholder="" [(ngModel)]="driverData.zip" #pinCode="ngModel" name="pinCode" required="true">
+                  <div *ngIf="pinCode.errors && (pinCode.dirty || pinCode.touched)">
+                    <span class="text-danger" [hidden]="!pinCode.errors.required">Pincode is required</span>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group is-required-short">
-                  <label class="control-label">Plot No/Land Mark</label>
-                  <input type="text" id="plotNumber" class="form-control" placeholder="" [(ngModel)]="driverData.street" #landMark="ngModel" name="streetAdd" required>
+                  <label class="control-label">Plot No/Land Mark *</label>
+                  <input type="text" id="plotNumber" class="form-control" placeholder="" [(ngModel)]="driverData.street" #landMark="ngModel" name="landMark" required="true">
+                  <div *ngIf="landMark.errors && (landMark.dirty || landMark.touched)">
+                    <span class="text-danger" [hidden]="!landMark.errors.required">Land Mark is required</span>
+                  </div>
                 </div>
               </div>
               <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                  <label for="vehicle">Vehicle</label>
+                  <label for="vehicle">Vehicle *</label>
                   <div class="">
-                    <select class="form-control" id="cabId" [(ngModel)]="driverData.cabId" #cabId="ngModel" name="cabId">
+                    <select class="form-control" id="cabId" [(ngModel)]="driverData.cabId" #cabId="ngModel" name="cabId" required="true">
                       <option *ngFor="let cab of cabList" [ngValue]="cab.cabId">{{cab.cabType}}</option>
                     </select>
+                    <div *ngIf="cabId.errors && (cabId.dirty || cabId.touched)">
+                      <span class="text-danger" [hidden]="!cabId.errors.required">Cab Id is required</span>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                  <label for="status">Status</label>
+                  <label for="status">Status *</label>
                   <div class="">
-                    <select class="form-control" id="statusId" [(ngModel)]="driverData.status" #statusId="ngModel" name="statusId">
+                    <select class="form-control" id="statusId" [(ngModel)]="driverData.status" #status="ngModel" name="status" required="true">
                       <option value="1">Active</option>
                       <option value="0">Inactive</option>
                     </select>
+                    <div *ngIf="status.errors && (status.dirty || status.touched)">
+                      <span class="text-danger" [hidden]="!status.errors.required">Status is required</span>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -193,7 +231,7 @@
           </h2>
         </div>
         <form class="row detail border border-dark">
-          <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="collapseThree" data-parent="#accordion2">
+          <div class="col-md-12 col-sm-12 col-xs-12 collapse" style="padding-top: 10px;" id="collapseThree" data-parent="#accordion2">
             <div class="row">
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
@@ -212,15 +250,18 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <label for="proofAddress">Proof of address</label>
-                  <input type="file" class="file-width" id="proofAddress" (change)="selectFile($event)" name="proofOfAddress">
+                  <input type="file" class="file-width" id="proofAddress" (click)="validateError($event)" (change)="selectFile($event)" name="proofOfAddress" required="true">
                   <div id="fileName">
                     <label id="fileLabel">{{ driverData.proofOfAddress || 'No file chosen'}}</label>
+                  </div>
+                  <div *ngIf="!driverData.proofOfAddress && isProofOfAddressSelected">
+                    <span class="text-danger">Proof of address is required</span>
                   </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
-                  <div><label for="policeDisclosure">Police disclosure</label></div>
+                  <label for="policeDisclosure">Police disclosure</label>
                   <input type="file" class="file-width" id="policeDisclosure" (change)="selectFile($event)" name="policeDisclose">
                   <div>
                     <label id="fileLabel">{{ driverData.policeDisclose || 'No file chosen'}}</label>
@@ -229,7 +270,7 @@
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
-                  <div><label for="agreement" id="agree-val" class="fileUpload">Agreement</label></div>
+                  <label for="agreement" id="agree-val" class="fileUpload">Agreement</label>
                   <input type="file" class="file-width" id="agreement" (change)="selectFile($event)" name="agreement">
                   <div>
                     <label id="fileLabel">{{ driverData.agreement || 'No file chosen'}}</label>
@@ -369,10 +410,10 @@
   <div class="row mt-1">
       <div class="col-md-12 col-sm-12 col-xs-12 m-t-10">
           <button type="button" class="btn btn-default" routerLink="/driver"> Cancel</button>
-          <button type="button" style="float: right;" *ngIf="!driverId" (click)="addOrUpdateDriverData(true)" class="btn btn-primary btn-xs pull-right m-r-10">
+          <button type="button" style="float: right;" [disabled]="formInvalid" *ngIf="!driverId" (click)="addOrUpdateDriverData(true)" class="btn btn-primary btn-xs pull-right m-r-10">
               <span class="letter-space-small"></span> Save
           </button>
-          <button type="button" style="float: right;" *ngIf="driverId" (click)="addOrUpdateDriverData(false)" class="btn btn-primary btn-xs pull-right m-r-10">
+          <button type="button" style="float: right;" [disabled]="formInvalid" *ngIf="driverId" (click)="addOrUpdateDriverData(false)" class="btn btn-primary btn-xs pull-right m-r-10">
               <span class="letter-space-small"></span> Update
           </button>
       </div>
