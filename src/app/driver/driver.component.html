@@ -49,7 +49,7 @@
           </td>
           <td>
             <span class="text-wrap">
-                <a class="pointer" (click)="editDriver($event,driver)"><span class="oi oi-pencil"></span> </a>/ <span class="oi oi-trash" title="delete" aria-hidden="true"></span>
+                <a class="pointer" (click)="editDriver($event,driver)"><span class="oi oi-pencil"></span> </a>/ <a class="pointer" (click)="deleteDriver(driver.driverId, index)"><span class="oi oi-trash" title="delete" aria-hidden="true"></span></a>
             </span>
           </td>
         </tr>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { DriverModel } from './model/driver.model';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,7 +15,8 @@ import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-driver',
   templateUrl: './driver.component.html',
-  styleUrls: ['./driver.component.css']
+  styleUrls: ['./driver.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DriverComponent implements OnInit, OnDestroy {
 
@@ -30,25 +31,9 @@ export class DriverComponent implements OnInit, OnDestroy {
   // thus we ensure the data is fetched before rendering
   // dtTrigger: Subject<any[]> = new Subject();
   driverData: DriverModel[] = [];
-    // new DriverModel('Santosh', 'Patil', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Anand', 'Hiremath', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Raj', 'Patil', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Bharat', 'test', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Suman', 'Patil', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Bagat', 'Varen', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Pramod', 'Patil', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Bheem', 'Deren', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Sanjay', 'Serub', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Prashant', 'Karan', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Santosh', 'Ures', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Dinoj', 'Hiremath', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Santosh', 'Hill', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Manoj', 'Hiremath', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male'),
-    // new DriverModel('Suraj', 'Gest', '1', 9965778889, 'santu.gouda@gmail.com', '1', 'Male'),
-    // new DriverModel('Prakash', 'Sereb', '3', 9965778889, 'anandgh87@gmail.com', '2', 'Male')
 
   constructor(private http: HttpClient, private driverService: DriverService, private spinnerService: Ng4LoadingSpinnerService,
-    private chRef: ChangeDetectorRef, private router: Router, private baseApiService: BaseApiService) {}
+    private cde: ChangeDetectorRef, private router: Router, private baseApiService: BaseApiService) {}
 
   ngOnInit() {
     this.spinnerService.show();
@@ -56,18 +41,34 @@ export class DriverComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 8
     };
+    this.loadData();
+  }
 
+  loadData() {
     const userId = this.baseApiService.getUserId();
     const apiToken = this.baseApiService.getApiToken();
-    let result = this.driverService.loadAllDriverData(userId, apiToken).subscribe(res => {
+    const result = this.driverService.loadAllDriverData(userId, apiToken).subscribe(res => {
       if (res) {
         this.driverData = res;
         this.dtTrigger.next();
       }
+      this.cde.detectChanges();
+      this.cde.markForCheck();
     });
     if (result) {
       this.spinnerService.hide();
     }
+  }
+  deleteDriver(driverId, index) {
+    const apiToken = this.baseApiService.getApiToken();
+    const userId = this.baseApiService.getUserId();
+      this.driverService.deleteDriver(driverId, userId, apiToken).subscribe(res => {
+        // this.driverData = res;
+        this.driverData.splice(index, 1);
+        // this.loadData();
+        // this.cde.detectChanges();
+        // this.cde.markForCheck();
+      });
   }
 
   editDriver(event: Event, driver: DriverModel) {

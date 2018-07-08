@@ -39,6 +39,19 @@ export class DriverService {
               .catch(this.handleError);
   }
 
+  deleteDriver(driverId: string, userId: string, apiToken: any): Observable<any> {
+    const requestURL  =  'http://18.219.43.223:8080/taxi/driver/delete';
+    this.qparams.set('id', driverId);
+    this.qparams.set('userId', userId);
+    return this.http.delete(requestURL, {
+      withCredentials: true,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'api_key': apiToken
+      }),
+      search: this.qparams}).map(this.extractData)
+      .catch(this.handleError);
+  }
   loadState(userId: any, apiToken: any): Observable<any> {
     const userIdVal = userId;
     const requestURL  =  'http://18.219.43.223:8080/taxi/common/stateList';
